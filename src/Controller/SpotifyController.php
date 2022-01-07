@@ -12,12 +12,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpotifyController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(AuthenticationService $authentication): Response
+    public function index(SpotifyService $spotify): Response
     {
-        $token = $authentication->getToken();
-        var_dump($token);
+        $relases = $spotify->getNewReleases();
         return $this->render('spotify/index.html.twig', [
-            'controller_name' => 'SpotifyController',
+            'controller_name' => 'New Releases',
+            'relases' => $relases
+        ]);
+    }
+
+    #[Route('/artists/{id}', name: 'artists')]
+    public function artists(Request $request): Response
+    {
+        return $this->render('spotify/artists.html.twig', [
+            'controller_name' => 'Artist',
         ]);
     }
 }
