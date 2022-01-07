@@ -23,7 +23,7 @@ class SpotifyService
         $response = $this->httpClient->request('GET', 'https://api.spotify.com/v1/browse/new-releases', [
             'auth_bearer' => $token,
             'query' => [
-                'limit' => 3,
+                'limit' => 10,
             ],
         ]);
         if (200 !== $response->getStatusCode())

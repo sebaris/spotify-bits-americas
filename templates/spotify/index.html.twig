@@ -3,19 +3,33 @@
 {% block title %}{{ controller_name }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>New Releases</h1>
-
-    {% for release in relases %}
-        <div>
-            <img src="{{ release.images[1].url }}" width="{{ release.images[1].width }}" height="{{ release.images[1].height }}" />
-            <span>{{ release.name }}</span>
-        </div>
-    {% endfor %}
+<div class="container">
+    <h2>New Releases</h2>
+    <div class="row">
+        {% for release in relases %}
+            <div class="col-sm-3">
+                <div class="album-container">
+                    <div class="info-container">
+                        <div class="album-img">
+                            <div class="album-img-container">
+                                <img src="{{ release.images[1].url }}" width="{{ release.images[1].width }}" height="{{ release.images[1].height }}" class="img-fluid" />
+                            </div>
+                        </div>
+                        <div class="data-album">
+                            <div class="album-title">
+                                {{ release.name }}
+                            </div>
+                            <div class="album-artists">
+                            {% for artist in release.artists %}
+                                <a>{{ artist.name }}</a>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
