@@ -2,5 +2,10 @@
 $body-bg: #121212;
 $body-color: #ffffff;
 
+// Links
+$link-decoration: none;
+$link-hover-color: #ffffff;
+$link-hover-decoration: none;
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";

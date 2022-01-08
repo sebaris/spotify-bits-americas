@@ -1,3 +1,10 @@
+.content {
+    min-height: 100%;
+    height: auto;
+    margin: 20px auto -60px;
+    padding: 0 0 60px;
+}
+
 .album-container {
     background: #FFFFFF;
     border-radius: 4px;
@@ -75,4 +82,14 @@
     color: #FFFFFF;
     padding: 2px 9px;
     border-radius: 12px;
+}
+
+.artis-data {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 30px;
+}
+
+.album-table img {
+    margin-bottom: 15px;
 }

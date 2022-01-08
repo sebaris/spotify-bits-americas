@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="container">
+<div class="new-releases">
     <h2>New Releases</h2>
     <div class="row">
         {% for release in relases %}
@@ -22,7 +22,7 @@
                             </div>
                             <div class="album-artists">
                             {% for artist in release.artists %}
-                                <a>{{ artist.name }}</a>
+                                <a href="{{ path('artists', {'id': artist.id}) }}">{{ artist.name }}</a>
                             {% endfor %}
                             </div>
                         </div>

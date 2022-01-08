@@ -22,10 +22,13 @@ class SpotifyController extends AbstractController
     }
 
     #[Route('/artists/{id}', name: 'artists')]
-    public function artists(Request $request): Response
+    public function artists(string $id, SpotifyService $spotify): Response
     {
+        $artist = $spotify->getArtist($id);
+        $albums = $spotify->getAlbumsArtist($id);
         return $this->render('spotify/artists.html.twig', [
-            'controller_name' => 'Artist',
+            'artist' => $artist,
+            'albums' => $albums
         ]);
     }
 }
