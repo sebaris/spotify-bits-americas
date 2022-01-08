@@ -17,7 +17,7 @@
                 <tr>
                     <th scope="col">Photo</th>
                     <th scope="col">Album</th>
-                    <th scope="col">Song</th>
+                    <th scope="col">Track</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +28,9 @@
                         </td>
                         <td>
                             {{ album.name }}
+                        </td>
+                        <td>
+                            {{ fisrtTrack(album.id) }}
                         </td>
                     </tr>
                 {% endfor %}

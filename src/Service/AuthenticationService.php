@@ -15,6 +15,11 @@ class AuthenticationService
         $this->key = base64_encode($_ENV['CLIENT_ID'].':'.$_ENV['CLIENT_SECRET']);
     }
 
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
     public function getToken(): String
     {
         $response = $this->httpClient->request('POST', 'https://accounts.spotify.com/api/token', [

@@ -7,12 +7,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SpotifyService
 {
-    private $httpClient;
+    //private $httpClient;
     private $authentication;
 
-    public function __construct(HttpClientInterface $httpClient, AuthenticationService $authentication)
+    public function __construct(AuthenticationService $authentication)
     {
-        $this->httpClient = $httpClient;
+        //$this->httpClient = $httpClient;
         $this->authentication = $authentication;
     }
 
@@ -28,7 +28,7 @@ class SpotifyService
     {
         $token = $this->authentication->getToken();
 
-        $response = $this->httpClient->request('GET', $_ENV['URL_BASE_SERVICE'].'/browse/new-releases', [
+        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/browse/new-releases', [
             'auth_bearer' => $token,
             'query' => [
                 'country' => 'CO',
@@ -58,7 +58,7 @@ class SpotifyService
     {
         $token = $this->authentication->getToken();
 
-        $response = $this->httpClient->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$id, [
+        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$id, [
             'auth_bearer' => $token
         ]);
         if (200 !== $response->getStatusCode())
@@ -72,6 +72,7 @@ class SpotifyService
     }
 
     /**
+     * Función que consulta en el API los albumes asociados a un artista
      * @param $artistId
      * @return mixed
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
@@ -83,7 +84,7 @@ class SpotifyService
     {
         $token = $this->authentication->getToken();
 
-        $response = $this->httpClient->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$artistId.'/albums', [
+        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$artistId.'/albums', [
             'auth_bearer' => $token
         ]);
         if (200 !== $response->getStatusCode())
@@ -94,5 +95,25 @@ class SpotifyService
         $responseJson = $response->getContent();
         $responseData = json_decode($responseJson);
         return $responseData->items;
+    }
+
+    public function getFirstTrackForAlbum($albumId)
+    {
+        $token = $this->authentication->getToken();
+        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/albums/'.$albumId.'/tracks', [
+            'auth_bearer' => $token,
+            'query' => [
+                'limit' => 1
+            ]
+        ]);
+
+        if (200 !== $response->getStatusCode())
+        {
+            throw new \Exception('El código de respuesta es diferente al esperado.');
+        }
+
+        $responseJson = $response->getContent();
+        $responseData = json_decode($responseJson);
+        return $responseData->items[0];
     }
 }
