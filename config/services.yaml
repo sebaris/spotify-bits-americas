@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    api.client_id: '446717c920bc412b8e1d0dffc509c60e'
+    api.client_secret: 'd37697c3a08f4550b681b71930cd8226'
+    api.url_base: 'https://api.spotify.com/v1'
 
 services:
     # default configuration for services in *this* file

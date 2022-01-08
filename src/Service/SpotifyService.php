@@ -3,16 +3,17 @@
 namespace App\Service;
 
 use PhpParser\Node\Expr\Array_;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SpotifyService
 {
-    //private $httpClient;
     private $authentication;
+    private $baseUrlApi;
 
-    public function __construct(AuthenticationService $authentication)
+    public function __construct(ParameterBagInterface $params, AuthenticationService $authentication)
     {
-        //$this->httpClient = $httpClient;
+        $this->baseUrlApi = $params->get('api.url_base');
         $this->authentication = $authentication;
     }
 
@@ -28,7 +29,7 @@ class SpotifyService
     {
         $token = $this->authentication->validateToken();
 
-        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/browse/new-releases', [
+        $response = $this->authentication->getHttpClient()->request('GET', $this->baseUrlApi.'/browse/new-releases', [
             'auth_bearer' => $token,
             'query' => [
                 'country' => 'CO',
@@ -58,7 +59,7 @@ class SpotifyService
     {
         $token = $this->authentication->validateToken();
 
-        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$id, [
+        $response = $this->authentication->getHttpClient()->request('GET', $this->baseUrlApi.'/artists/'.$id, [
             'auth_bearer' => $token
         ]);
         if (200 !== $response->getStatusCode())
@@ -84,7 +85,7 @@ class SpotifyService
     {
         $token = $this->authentication->validateToken();
 
-        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$artistId.'/albums', [
+        $response = $this->authentication->getHttpClient()->request('GET', $this->baseUrlApi.'/artists/'.$artistId.'/albums', [
             'auth_bearer' => $token
         ]);
         if (200 !== $response->getStatusCode())
@@ -109,7 +110,7 @@ class SpotifyService
     public function getFirstTrackForAlbum($albumId)
     {
         $token = $this->authentication->validateToken();
-        $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/albums/'.$albumId.'/tracks', [
+        $response = $this->authentication->getHttpClient()->request('GET', $this->baseUrlApi.'/albums/'.$albumId.'/tracks', [
             'auth_bearer' => $token,
             'query' => [
                 'limit' => 1

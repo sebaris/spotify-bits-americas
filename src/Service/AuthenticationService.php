@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -11,11 +12,11 @@ class AuthenticationService
     private $requestStack;
     private $key;
 
-    public function __construct(HttpClientInterface $httpClient, RequestStack $requestStack)
+    public function __construct(ParameterBagInterface $params, HttpClientInterface $httpClient, RequestStack $requestStack)
     {
         $this->httpClient = $httpClient;
         $this->requestStack = $requestStack;
-        $this->key = base64_encode($_ENV['CLIENT_ID'].':'.$_ENV['CLIENT_SECRET']);
+        $this->key = base64_encode($params->get('api.client_id').':'.$params->get('api.client_secret'));
     }
 
     /**
