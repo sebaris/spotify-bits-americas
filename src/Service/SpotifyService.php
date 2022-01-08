@@ -26,7 +26,7 @@ class SpotifyService
      */
     public function getNewReleases(): Array
     {
-        $token = $this->authentication->getToken();
+        $token = $this->authentication->validateToken();
 
         $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/browse/new-releases', [
             'auth_bearer' => $token,
@@ -56,7 +56,7 @@ class SpotifyService
      */
     public function getArtist($id)
     {
-        $token = $this->authentication->getToken();
+        $token = $this->authentication->validateToken();
 
         $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$id, [
             'auth_bearer' => $token
@@ -82,7 +82,7 @@ class SpotifyService
      */
     public function getAlbumsArtist($artistId)
     {
-        $token = $this->authentication->getToken();
+        $token = $this->authentication->validateToken();
 
         $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/artists/'.$artistId.'/albums', [
             'auth_bearer' => $token
@@ -99,7 +99,7 @@ class SpotifyService
 
     public function getFirstTrackForAlbum($albumId)
     {
-        $token = $this->authentication->getToken();
+        $token = $this->authentication->validateToken();
         $response = $this->authentication->getHttpClient()->request('GET', $_ENV['URL_BASE_SERVICE'].'/albums/'.$albumId.'/tracks', [
             'auth_bearer' => $token,
             'query' => [
