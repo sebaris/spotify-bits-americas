@@ -97,6 +97,15 @@ class SpotifyService
         return $responseData->items;
     }
 
+    /**
+     * Función que consulta las canciones de un album y retorna la primera de ellas
+     * @param $albumId
+     * @return mixed
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
     public function getFirstTrackForAlbum($albumId)
     {
         $token = $this->authentication->validateToken();

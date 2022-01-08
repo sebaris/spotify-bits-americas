@@ -59,7 +59,7 @@ class AuthenticationService
     }
 
     /**
-     * Función que almacena en session
+     * Función que almacena en session las variables de token
      * @param $info
      */
     private function saveSessionToken($info)
@@ -70,6 +70,14 @@ class AuthenticationService
         $session->set('expire', $info->expires_in);
     }
 
+    /**
+     * Funciín que valida la existencia y tiempo de expiración de un token para retornar el exitente o consultar uno nuevo
+     * @return mixed|String
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
     public function validateToken()
     {
         $session = $this->requestStack->getSession();
